@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <img src="logo.png" alt="Logo" class="logo">
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            
+        </ul>
+        <div class="dark-mode-toggle">
+            <span>Dark Mode</span>
+            <label class="switch">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </nav>
+
+    
+    <div class="carousel">
+        <div class="carousel-track">
+            <div class="carousel-slide">
+                <img src="slider1.webp" alt="Slide 1">
+            </div>
+            <div class="carousel-slide">
+                <img src="slider2.webp" alt="Slide 2">
+            </div>
+            <div class="carousel-slide">
+                <img src="slider3.webp" alt="Slide 3">
+            </div>
+        </div>
+        <div class="carousel-nav">
+            <button class="carousel-prev" aria-label="Previous Slide">&#10094;</button>
+            <button class="carousel-next" aria-label="Next Slide">&#10095;</button>
+        </div>
+        <div class="carousel-dots"></div>
+    </div>
+
+    <div class="login-container">
+        <h1>Sign In</h1>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                <span class="error" id="emailError">Please enter a valid email address</span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+                <span class="error" id="passwordError">Password must be at least 6 characters</span>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Your Company Name. All rights reserved.</p>
+    </footer>
+
+    
+    <script>
+        const toggleSwitch = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark');
+            toggleSwitch.checked = true;
+        }
+
+        
+        toggleSwitch.addEventListener('change', () => {
+            body.classList.toggle('dark');
+            
+            
+            if (body.classList.contains('dark')) {
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            let isValid = true;
+
+            // Email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailInput.value)) {
+                emailError.style.display = 'block';
+                emailInput.style.borderColor = '#e63946';
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+                emailInput.style.borderColor = '#ddd';
+            }
+
+            // Password validation
+            if (passwordInput.value.length < 6) {
+                passwordError.style.display = 'block';
+                passwordInput.style.borderColor = '#e63946';
+                isValid = false;
+            } else {
+                passwordError.style.display = 'none';
+                passwordInput.style.borderColor = '#ddd';
+            }
+
+            if (isValid) {
+                const email = emailInput.value;
+                const password = passwordInput.value;
+                
+                console.log('Login successful with:');
+                console.log('Email:', email);
+                console.log('Password:', password);
+                
+                alert('Login successful!\nEmail: ' + email + '\nPassword: [hidden]');
+                
+                loginForm.reset();
+            }
+        });
+
+        // Real-time input feedback
+        emailInput.addEventListener('input', () => {
+            emailError.style.display = 'none';
+            emailInput.style.borderColor = '#ddd';
+        });
+
+        passwordInput.addEventListener('input', () => {
+            passwordError.style.display = 'none';
+            passwordInput.style.borderColor = '#ddd';
+        });
+
+        const carousel = document.querySelector('.carousel');
+    const track = document.querySelector('.carousel-track');
+    const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+    const prevButton = document.querySelector('.carousel-prev');
+    const nextButton = document.querySelector('.carousel-next');
+    const dotsContainer = document.querySelector('.carousel-dots');
+
+    let slideWidth = slides[0].getBoundingClientRect().width;
+    let slideIndex = 0;
+
+    function setSlidePosition(slide, index) {
+        slide.style.left = slideWidth * index + 'px';
+    }
+
+    slides.forEach(setSlidePosition);
+
+    function updateSlidePosition() {
+        track.style.transform = 'translateX(-' + slideWidth * slideIndex + 'px)';
+        updateDots();
+    }
+
+    function moveToSlide(index) {
+        if (index < 0 || index >= slides.length) return;
+        slideIndex = index;
+        updateSlidePosition();
+    }
+
+    function createDots() {
+        slides.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.addEventListener('click', () => moveToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+        updateDots();
+    }
+
+    function updateDots() {
+        const dots = Array.from(document.querySelectorAll('.carousel-dots button'));
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === slideIndex);
+        });
+    }
+
+    prevButton.addEventListener('click', () => moveToSlide(slideIndex - 1));
+    nextButton.addEventListener('click', () => moveToSlide(slideIndex + 1));
+
+    createDots();
+
+    window.addEventListener('resize', () => {
+        slideWidth = slides[0].getBoundingClientRect().width;
+        slides.forEach(setSlidePosition);
+        updateSlidePosition();
+    });
+
+    
+    let autoplayInterval = setInterval(() => {
+        moveToSlide(slideIndex + 1 >= slides.length ? 0 : slideIndex + 1);
+    }, 5000)
+
+    carousel.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+    carousel.addEventListener('mouseleave', () => {
+        autoplayInterval = setInterval(() => {
+            moveToSlide(slideIndex + 1 >= slides.length ? 0 : slideIndex + 1);
+        }, 5000);
+    });
+
+    </script>
+</body>
+</html>

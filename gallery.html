@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <img src="logo.png" alt="Logo" class="logo">
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            
+        </ul>
+        <div class="dark-mode-toggle">
+            <span>Dark Mode</span>
+            <label class="switch">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </nav>
+
+    
+    <section class="gallery">
+        <h1>Our Gallery</h1>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="image1.jpg" alt="Gallery Image 1">
+                <div class="caption">Scene1</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image2.jpg" alt="Gallery Image 2">
+                <div class="caption">Scene2</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image3.jpg" alt="Gallery Image 3">
+                <div class="caption">Scene3</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image4.jpg" alt="Gallery Image 4">
+                <div class="caption">Scene4</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image5.jpg" alt="Gallery Image 5">
+                <div class="caption">Scene5</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image6.jpg" alt="Gallery Image 6">
+                <div class="caption">Scene6</div>
+            </div>
+        </div>
+    </section>
+
+    
+    <footer>
+        <p>&copy; 2023 Your Company Name. All rights reserved.</p>
+    </footer>
+
+    
+    <script>
+        const toggleSwitch = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark');
+            toggleSwitch.checked = true;
+        }
+
+        
+        toggleSwitch.addEventListener('change', () => {
+            body.classList.toggle('dark');
+            
+            
+            if (body.classList.contains('dark')) {
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+    </script>
+</body>
+</html>

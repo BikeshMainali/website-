@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <img src="logo.png" alt="Logo" class="logo">
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            
+        </ul>
+        <div class="dark-mode-toggle">
+            <span>Dark Mode</span>
+            <label class="switch">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </nav>
+
+    
+    <div class="container">
+        <h1>About Me</h1>
+        <div class="image-container">
+            <img src="photo.jpg" alt="Your Picture">
+            <span class="name-overlay">genji</span>
+        </div>
+        <div class="bio">
+            <p>
+                Hello! I’m Your genji, a passionate individual with a love for creativity and innovation. 
+                I enjoy working on projects that challenge me to think outside the box and bring ideas to life. 
+                With a background in [your field/industry, e.g., web development, design, etc.], I have spent 
+                [number] years honing my skills in [specific skills, e.g., coding, problem-solving, etc.]. 
+                In my free time, I like to [hobbies/interests, e.g., read books, travel, or play music]. 
+                I believe in lifelong learning and am always excited to explore new opportunities!
+            </p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    
+
+    
+    <footer>
+        <p>&copy; 2023 Your Company Name. All rights reserved.</p>
+    </footer>
+
+    
+    <script>
+        const toggleSwitch = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark');
+            toggleSwitch.checked = true;
+        }
+
+        
+        toggleSwitch.addEventListener('change', () => {
+            body.classList.toggle('dark');
+            
+            
+            if (body.classList.contains('dark')) {
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+    </script>
+</body>
+</html>
